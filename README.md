@@ -31,3 +31,5 @@ npm run start
 - App Router is used.
 - No backend/database/auth/API integrations are included in this PR.
 - Product interface data is static mock data only.
+- `docs/design-system.md` captures the dark-mode visual baseline.
+- `docs/product-blueprint.md` captures the first Agentic OS product direction and milestones.
