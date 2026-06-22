@@ -15,6 +15,8 @@ import type {
   LogEntry,
   MemoryRecord,
   WorkflowTask,
+  WorkflowLogEntry,
+  WorkflowStep,
 } from "@/lib/types";
 
 export const featureList: Array<{ title: string; icon: LucideIcon }> = [
@@ -57,26 +59,86 @@ export const tasks: WorkflowTask[] = [
   {
     id: "WF-102",
     title: "Review incoming tool outputs",
+    description: "Inspect a returned agent packet, check its claims against local artifacts, and decide whether the output can be accepted.",
     status: "Running",
     progress: 72,
     assignedAgentId: "agent-planner",
+    dependencies: [],
     evidenceIds: ["EV-201"],
+    approvalIds: ["APR-032"],
   },
   {
     id: "WF-109",
     title: "Schedule nightly memory compaction",
+    description: "Prepare a recurring local maintenance action, but pause before any destructive cleanup command is allowed to run.",
     status: "Waiting approval",
     progress: 46,
     assignedAgentId: "agent-exec",
+    dependencies: ["WF-102"],
     evidenceIds: [],
+    approvalIds: ["APR-031"],
   },
   {
     id: "WF-114",
     title: "Assemble summary packet",
+    description: "Collect source-backed findings into a final packet with links to the artifacts used for each claim.",
     status: "Queued",
     progress: 88,
     assignedAgentId: "agent-research",
+    dependencies: ["WF-102"],
     evidenceIds: ["EV-204"],
+    approvalIds: [],
+  },
+];
+
+export const workflowSteps: WorkflowStep[] = [
+  {
+    id: "STEP-102-1",
+    workflowId: "WF-102",
+    title: "Parse incoming report and extract claims",
+    ownerAgentId: "agent-planner",
+    status: "Done",
+    dependsOn: [],
+  },
+  {
+    id: "STEP-102-2",
+    workflowId: "WF-102",
+    title: "Map each claim to a local file or command output",
+    ownerAgentId: "agent-research",
+    status: "Running",
+    dependsOn: ["STEP-102-1"],
+  },
+  {
+    id: "STEP-102-3",
+    workflowId: "WF-102",
+    title: "Approve or reject the packet with an evidence note",
+    ownerAgentId: "agent-planner",
+    status: "Queued",
+    dependsOn: ["STEP-102-2"],
+  },
+  {
+    id: "STEP-109-1",
+    workflowId: "WF-109",
+    title: "Draft local compaction command",
+    ownerAgentId: "agent-exec",
+    status: "Done",
+    dependsOn: [],
+  },
+  {
+    id: "STEP-109-2",
+    workflowId: "WF-109",
+    title: "Wait for human approval before cleanup",
+    ownerAgentId: "agent-exec",
+    status: "Blocked",
+    dependsOn: ["STEP-109-1"],
+  },
+  {
+    id: "STEP-114-1",
+    workflowId: "WF-114",
+    title: "Collect accepted source links",
+    ownerAgentId: "agent-research",
+    status: "Queued",
+    dependsOn: ["STEP-102-3"],
   },
 ];
 
@@ -89,6 +151,7 @@ export const memory: MemoryRecord[] = [
 export const approvals: ApprovalRequest[] = [
   {
     id: "APR-031",
+    workflowId: "WF-109",
     riskLevel: "high",
     actionType: "shell_command",
     requestedByAgentId: "agent-exec",
@@ -98,6 +161,7 @@ export const approvals: ApprovalRequest[] = [
   },
   {
     id: "APR-032",
+    workflowId: "WF-102",
     riskLevel: "medium",
     actionType: "external_write",
     requestedByAgentId: "agent-planner",
@@ -110,6 +174,7 @@ export const approvals: ApprovalRequest[] = [
 export const evidence: EvidenceRecord[] = [
   {
     id: "EV-201",
+    workflowId: "WF-102",
     claim: "Workflow output references existing local files only.",
     artifactPath: "reports/WF-102-output.md",
     verificationCommand: "npm run lint && npm run build",
@@ -118,12 +183,21 @@ export const evidence: EvidenceRecord[] = [
   },
   {
     id: "EV-204",
+    workflowId: "WF-114",
     claim: "Summary packet includes source links for each accepted claim.",
     artifactPath: "reports/WF-114-summary.md",
     verificationCommand: "manual source check",
     result: "Needs one more review",
     status: "Inconclusive",
   },
+];
+
+export const workflowLogs: WorkflowLogEntry[] = [
+  { id: "LOG-102-1", workflowId: "WF-102", message: "[05:10:21] Planner-Agent accepted workflow draft" },
+  { id: "LOG-102-2", workflowId: "WF-102", message: "[05:11:09] Tool chain resolved 4 dependencies" },
+  { id: "LOG-102-3", workflowId: "WF-102", message: "[05:14:02] Evidence EV-201 passed local verification" },
+  { id: "LOG-109-1", workflowId: "WF-109", message: "[05:13:17] Approval APR-031 opened for destructive shell command" },
+  { id: "LOG-114-1", workflowId: "WF-114", message: "[05:15:40] Research-Agent queued source packet assembly" },
 ];
 
 export const logs: LogEntry[] = [

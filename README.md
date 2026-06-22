@@ -6,8 +6,9 @@ First version of the Cogito website built with Next.js, TypeScript, Tailwind CSS
 
 - `/` Home landing page
 - `/about` About page
-- `/docs` Docs placeholder page
+- `/docs` Project foundation and direction page
 - `/app-preview` App preview dashboard (static mock data)
+- `/workflows/[id]` Workflow detail pages for task breakdowns, approvals, evidence, and logs
 
 ## Setup
 

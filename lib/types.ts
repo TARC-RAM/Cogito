@@ -12,10 +12,22 @@ export type Agent = {
 export type WorkflowTask = {
   id: string;
   title: string;
+  description: string;
   status: "Running" | "Queued" | "Waiting approval" | "Succeeded" | "Blocked";
   progress: number;
   assignedAgentId: string;
+  dependencies: string[];
   evidenceIds: string[];
+  approvalIds: string[];
+};
+
+export type WorkflowStep = {
+  id: string;
+  workflowId: string;
+  title: string;
+  ownerAgentId: string;
+  status: "Done" | "Running" | "Queued" | "Blocked";
+  dependsOn: string[];
 };
 
 export type MemoryRecord = {
@@ -28,6 +40,7 @@ export type LogEntry = string;
 
 export type ApprovalRequest = {
   id: string;
+  workflowId: string;
   riskLevel: "medium" | "high" | "critical";
   actionType: "shell_command" | "file_delete" | "external_write" | "deploy";
   requestedByAgentId: string;
@@ -38,9 +51,16 @@ export type ApprovalRequest = {
 
 export type EvidenceRecord = {
   id: string;
+  workflowId: string;
   claim: string;
   artifactPath: string;
   verificationCommand: string;
   result: string;
   status: "Passed" | "Failed" | "Inconclusive" | "Unverified";
+};
+
+export type WorkflowLogEntry = {
+  id: string;
+  workflowId: string;
+  message: string;
 };

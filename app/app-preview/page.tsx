@@ -1,3 +1,7 @@
+import Link from "next/link";
+
+import { ChevronRight } from "lucide-react";
+
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
@@ -93,17 +97,24 @@ export default function AppPreviewPage() {
           </CardHeader>
           <CardContent className="space-y-3">
             {tasks.map((task) => (
-              <div key={task.id} className="space-y-1.5">
+              <Link
+                key={task.id}
+                href={`/workflows/${task.id}`}
+                className="block space-y-1.5 rounded-lg transition-colors hover:bg-zinc-900/50"
+              >
                 <div className="flex items-center justify-between gap-2">
                   <p className="text-xs text-zinc-300">
                     {task.id} · {task.title}
                   </p>
-                  <span className="text-[11px] text-zinc-500">{task.status}</span>
+                  <span className="flex items-center gap-1 text-[11px] text-zinc-500">
+                    {task.status}
+                    <ChevronRight className="h-3 w-3" />
+                  </span>
                 </div>
                 <div className="h-1.5 overflow-hidden rounded-full bg-zinc-800">
                   <div className="h-full bg-zinc-200" style={{ width: `${task.progress}%` }} />
                 </div>
-              </div>
+              </Link>
             ))}
           </CardContent>
         </Card>

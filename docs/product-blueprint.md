@@ -158,9 +158,10 @@ Goal: make the UI communicate the intended OS clearly without backend complexity
 
 Deliverables:
 
-- Expand `/app-preview` with panels for approvals and evidence.
-- Add an agent detail page or workflow detail page.
-- Replace generic mock data with realistic Agentic OS sample data.
+- Expand `/app-preview` with panels for approvals and evidence. (done)
+- Add workflow detail pages under `/workflows/[id]` for task breakdowns, approval gates, evidence trails, and scoped logs. (done)
+- Add an agent detail page.
+- Replace generic mock data with realistic Agentic OS sample data. (started)
 - Keep all data local/static.
 
 ### Milestone 2: Local data layer
