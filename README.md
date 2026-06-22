@@ -7,6 +7,8 @@ First version of the Cogito website built with Next.js, TypeScript, Tailwind CSS
 - `/` Home landing page
 - `/about` About page
 - `/docs` Project foundation and direction page
+- `/agents` Agent registry page
+- `/agents/[id]` Agent detail pages for role, tools, owned workflows, approvals, and evidence
 - `/app-preview` App preview dashboard (static mock data)
 - `/workflows` Workflow index page
 - `/workflows/[id]` Workflow detail pages for task breakdowns, approvals, evidence, and logs

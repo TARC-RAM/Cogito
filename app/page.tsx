@@ -31,6 +31,11 @@ export default function Home() {
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </Button>
           </Link>
+          <Link href="/agents">
+            <Button size="lg" variant="secondary">
+              View Agents
+            </Button>
+          </Link>
           <Link href="/workflows">
             <Button size="lg" variant="secondary">
               View Workflows
@@ -74,10 +79,19 @@ export default function Home() {
             </CardHeader>
             <CardContent className="space-y-3">
               {agents.map((agent) => (
-                <div key={agent.name} className="rounded-lg border border-zinc-800 bg-zinc-900/60 p-3">
-                  <p className="text-sm font-medium">{agent.name}</p>
-                  <p className="text-xs text-zinc-400">{agent.status} · {agent.task}</p>
-                </div>
+                <Link
+                  key={agent.name}
+                  href={`/agents/${agent.id}`}
+                  className="block rounded-lg border border-zinc-800 bg-zinc-900/60 p-3 transition-colors hover:bg-zinc-900"
+                >
+                  <div className="flex items-center justify-between gap-3">
+                    <div>
+                      <p className="text-sm font-medium">{agent.name}</p>
+                      <p className="text-xs text-zinc-400">{agent.status} · {agent.task}</p>
+                    </div>
+                    <ChevronRight className="h-4 w-4 text-zinc-500" />
+                  </div>
+                </Link>
               ))}
             </CardContent>
           </Card>

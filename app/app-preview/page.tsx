@@ -50,9 +50,10 @@ export default function AppPreviewPage() {
           </CardHeader>
           <CardContent className="space-y-3">
             {agents.map((agent) => (
-              <div
+              <Link
                 key={agent.name}
-                className="flex items-start justify-between gap-4 rounded-lg border border-zinc-800 bg-zinc-900/60 p-3"
+                href={`/agents/${agent.id}`}
+                className="flex items-start justify-between gap-4 rounded-lg border border-zinc-800 bg-zinc-900/60 p-3 transition-colors hover:bg-zinc-900"
               >
                 <div>
                   <p className="text-sm font-medium">{agent.name}</p>
@@ -66,8 +67,11 @@ export default function AppPreviewPage() {
                     ))}
                   </div>
                 </div>
-                <Badge>{agent.status}</Badge>
-              </div>
+                <div className="flex items-center gap-2">
+                  <Badge>{agent.status}</Badge>
+                  <ChevronRight className="h-4 w-4 text-zinc-500" />
+                </div>
+              </Link>
             ))}
           </CardContent>
         </Card>

@@ -62,14 +62,14 @@ export default async function WorkflowPage({
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
-        <Link href="/app-preview">
+        <Link href="/workflows">
           <Button variant="secondary">
             <ArrowLeft className="h-4 w-4" />
-            Back to preview
+            Back to workflows
           </Button>
         </Link>
         <div className="flex items-center gap-2 text-xs text-zinc-500">
-          <Link href="/app-preview" className="hover:text-zinc-200">Dashboard</Link>
+          <Link href="/workflows" className="hover:text-zinc-200">Workflows</Link>
           <ChevronRight className="h-3 w-3" />
           <span>{workflow.id}</span>
         </div>
@@ -141,13 +141,16 @@ export default async function WorkflowPage({
           </CardHeader>
           <CardContent>
             {assignedAgent ? (
-              <div className="rounded-lg border border-zinc-800 bg-zinc-900/60 p-3">
+              <Link href={`/agents/${assignedAgent.id}`} className="block rounded-lg border border-zinc-800 bg-zinc-900/60 p-3 transition-colors hover:bg-zinc-900">
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <p className="text-sm font-medium">{assignedAgent.name}</p>
                     <p className="mt-1 text-xs text-zinc-400">{assignedAgent.task}</p>
                   </div>
-                  <Badge>{assignedAgent.status}</Badge>
+                  <div className="flex items-center gap-2">
+                    <Badge>{assignedAgent.status}</Badge>
+                    <ChevronRight className="h-4 w-4 text-zinc-500" />
+                  </div>
                 </div>
                 <div className="mt-3 flex flex-wrap gap-1.5">
                   {assignedAgent.allowedTools.map((tool) => (
@@ -156,7 +159,7 @@ export default async function WorkflowPage({
                     </span>
                   ))}
                 </div>
-              </div>
+              </Link>
             ) : (
               <p className="text-sm text-zinc-400">No assigned agent found.</p>
             )}
