@@ -64,3 +64,36 @@ export type WorkflowLogEntry = {
   workflowId: string;
   message: string;
 };
+
+export type HermesMessage = {
+  id?: string | number;
+  role: "user" | "assistant" | "tool" | "system";
+  content: string;
+  timestamp?: string;
+  reasoning?: string;
+  tool_calls?: Array<{
+    id: string;
+    type: string;
+    function: {
+      name: string;
+      arguments: string;
+    };
+  }>;
+  tool_name?: string;
+  tool_call_id?: string;
+};
+
+export type HermesSession = {
+  id: string;
+  title?: string;
+  profile: string;
+  created?: string;
+  lastModified?: string;
+  messageCount?: number;
+  preview?: string;
+  messages?: HermesMessage[];
+  model?: string;
+  timestamp?: string;
+  reason?: string;
+  error?: string | null;
+};

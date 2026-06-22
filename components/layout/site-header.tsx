@@ -8,6 +8,7 @@ const links = [
   { href: "/docs", label: "Docs" },
   { href: "/agents", label: "Agents" },
   { href: "/workflows", label: "Workflows" },
+  { href: "/sessions", label: "Sessions" },
   { href: "/app-preview", label: "App Preview" },
 ];
 

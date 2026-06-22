@@ -10,7 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { agents, approvals, evidence, logs, memory, tasks } from "@/lib/mock-data";
+import { agents, approvals, evidence, logs, memory, sessions, tasks } from "@/lib/mock-data";
 
 function approvalTone(riskLevel: string) {
   if (riskLevel === "critical" || riskLevel === "high") {
@@ -170,6 +170,35 @@ export default function AppPreviewPage() {
           </CardContent>
         </Card>
       </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Hermes Sessions</CardTitle>
+          <CardDescription>Conversation history from this device</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          {sessions.slice(0, 3).map((session) => (
+            <Link
+              key={session.id}
+              href={`/sessions/${session.id}`}
+              className="block rounded-lg border border-zinc-800 bg-zinc-900/60 p-3 transition-colors hover:bg-zinc-900"
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex-1">
+                  <p className="text-sm font-medium">{session.title}</p>
+                  <p className="mt-1 text-xs text-zinc-400">{session.preview}</p>
+                  <div className="mt-2 flex items-center gap-2 text-xs text-zinc-500">
+                    <span>{session.messageCount} messages</span>
+                    <span>·</span>
+                    <span>{session.profile}</span>
+                  </div>
+                </div>
+                <ChevronRight className="h-4 w-4 text-zinc-500" />
+              </div>
+            </Link>
+          ))}
+        </CardContent>
+      </Card>
 
       <Card>
         <CardHeader>
