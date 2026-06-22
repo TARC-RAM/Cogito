@@ -31,6 +31,11 @@ export default function Home() {
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </Button>
           </Link>
+          <Link href="/workflows">
+            <Button size="lg" variant="secondary">
+              View Workflows
+            </Button>
+          </Link>
           <Link href="/docs">
             <Button size="lg" variant="secondary">
               Read Docs
@@ -56,8 +61,8 @@ export default function Home() {
       <section>
         <div className="mb-6 flex items-center justify-between">
           <h2 className="text-2xl font-semibold tracking-tight">Product Preview</h2>
-          <Link href="/app-preview" className="flex items-center gap-1 text-sm text-zinc-400 hover:text-zinc-100">
-            Open full preview
+          <Link href="/workflows" className="flex items-center gap-1 text-sm text-zinc-400 hover:text-zinc-100">
+            Browse workflows
             <ChevronRight className="h-4 w-4" />
           </Link>
         </div>
@@ -83,10 +88,19 @@ export default function Home() {
             </CardHeader>
             <CardContent className="space-y-3">
               {tasks.slice(0, 2).map((task) => (
-                <div key={task.id} className="rounded-lg border border-zinc-800 bg-zinc-900/60 p-3">
-                  <p className="text-sm font-medium">{task.id} · {task.title}</p>
-                  <p className="text-xs text-zinc-400">Progress: {task.progress}%</p>
-                </div>
+                <Link
+                  key={task.id}
+                  href={`/workflows/${task.id}`}
+                  className="block rounded-lg border border-zinc-800 bg-zinc-900/60 p-3 transition-colors hover:bg-zinc-900"
+                >
+                  <div className="flex items-center justify-between gap-3">
+                    <div>
+                      <p className="text-sm font-medium">{task.id} · {task.title}</p>
+                      <p className="text-xs text-zinc-400">Progress: {task.progress}%</p>
+                    </div>
+                    <ChevronRight className="h-4 w-4 text-zinc-500" />
+                  </div>
+                </Link>
               ))}
               <div className="rounded-lg border border-zinc-800 bg-zinc-900/60 p-3">
                 <p className="mb-2 text-sm font-medium">Recent Logs</p>

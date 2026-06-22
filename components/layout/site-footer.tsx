@@ -15,6 +15,9 @@ export function SiteFooter() {
           <Link href="/docs" className="hover:text-zinc-100">
             Docs
           </Link>
+          <Link href="/workflows" className="hover:text-zinc-100">
+            Workflows
+          </Link>
           <Link href="/app-preview" className="hover:text-zinc-100">
             Preview
           </Link>
